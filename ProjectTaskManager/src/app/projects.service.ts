@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Project } from './project';
 
@@ -10,11 +10,17 @@ export class ProjectsService {
   constructor(private httpClient: HttpClient) {}
 
   getAllProjects(): Observable<Project[]>{
+    
     return this.httpClient.get<Project[]>("/api/projects", {responseType:"json"})
     .pipe(map((data:Project[])=>{
       
       return data;
     }))
+  }
+
+  getProjectByProjectID(ProjectID: number): Observable<Project>
+  {
+    return this.httpClient.get<Project>("/api/projects/searchbyprojectid/" + ProjectID, { responseType: "json" });
   }
 
   insertProject(newProject:Project):Observable<Project>{

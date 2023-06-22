@@ -3,16 +3,22 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { AboutComponent } from './admin/about/about.component';
 import { ProjectsComponent } from './admin/projects/projects.component';
+import { LoginComponent } from './login/login.component';
+import { CanActivateGaurdService } from './can-activate-gaurd.service';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 const routes: Routes = [
-  {path:"dashboard", component:DashboardComponent},
-  {path:"about", component:AboutComponent},
-  {path:"projects", component:ProjectsComponent},
-  {path:"", redirectTo:"dashboard", pathMatch:"full" }
+ 
+  { path: "", redirectTo: "login", pathMatch: "full" },
+  { path: "login", component: LoginComponent },
+  { path: "signup", component: SignUpComponent },
+  { path: "dashboard", component: DashboardComponent, data: { expectedRole: "Admin" } },
+  { path: "about", component: AboutComponent },
+  { path: "projects", component: ProjectsComponent, data: { expectedRole: "Admin" } },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
