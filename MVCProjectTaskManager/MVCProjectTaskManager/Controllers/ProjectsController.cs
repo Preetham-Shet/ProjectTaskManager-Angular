@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MVCProjectTaskManager.Controllers
 {
-    
+
     public class ProjectsController : Controller
     {
         private ApplicationDbContext db;
@@ -68,15 +68,20 @@ namespace MVCProjectTaskManager.Controllers
         public IActionResult GetProjectByProject(int ProjectID)
         {
             Project project = db.Projects.Include("ClientLocation").Where(temp => temp.ProjectID == ProjectID).FirstOrDefault();
-
-            ProjectViewModel projectViewModel = new ProjectViewModel() { ProjectID = project.ProjectID, ProjectName = project.ProjectName, TeamSize = project.TeamSize, DateOfStart = project.DateOfStart.ToString("dd/MM/yyyy"), Active = project.Active, ClientLocation = project.ClientLocation, ClientLocationID = project.ClientLocationID, Status = project.Status };
-            return Ok(projectViewModel);
+            if (project != null)
+            {
+                ProjectViewModel projectViewModel = new ProjectViewModel() { ProjectID = project.ProjectID, ProjectName = project.ProjectName, TeamSize = project.TeamSize, DateOfStart = project.DateOfStart.ToString("dd/MM/yyyy"), Active = project.Active, ClientLocation = project.ClientLocation, ClientLocationID = project.ClientLocationID, Status = project.Status };
+                return Ok(projectViewModel);
+            }
+            else
+                return new EmptyResult();
         }
 
         [HttpPost]
         [Route("api/projects")]
-        [Authorize]
-        [ValidateAntiForgeryToken]
+        //[Authorize]
+        //[ValidateAntiForgeryToken]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Post([FromBody] Project project)
         {
             project.ClientLocation = null;

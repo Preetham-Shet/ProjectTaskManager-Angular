@@ -6,6 +6,7 @@ import { ProjectsComponent } from './admin/projects/projects.component';
 import { LoginComponent } from './login/login.component';
 import { CanActivateGaurdService } from './can-activate-gaurd.service';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { TasksComponent } from './tasks/tasks.component';
 
 const routes: Routes = [
  
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: "dashboard", component: DashboardComponent, data: { expectedRole: "Admin" } },
   { path: "about", component: AboutComponent },
   { path: "projects", component: ProjectsComponent, data: { expectedRole: "Admin" } },
+  {path:"tasks", component:TasksComponent,data: { expectedRole: "Employee" } }
 ];
 
 @NgModule({
