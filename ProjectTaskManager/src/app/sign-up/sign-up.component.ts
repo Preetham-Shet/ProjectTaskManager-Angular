@@ -12,6 +12,7 @@ import { CustomValidatorsService } from '../custom-validators.service';
 import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
 import { SignUpViewModel } from '../sign-up-view-model';
+import { CanComponentDeactivate } from '../can-deactivate-guard.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,11 +20,12 @@ import { SignUpViewModel } from '../sign-up-view-model';
   styleUrls: ['./sign-up.component.scss'],
 })
 
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit , CanComponentDeactivate{
   signUpForm: FormGroup | any = null;
   genders = ['male', 'female'];
   countries: Country[] = [];
   registerError: string | null = null;
+ canLeave:boolean = false;
 
   constructor(
     private countriesService: CountriesService,
@@ -81,6 +83,7 @@ export class SignUpComponent implements OnInit {
 
     this.signUpForm.valueChanges.subscribe((value: any) => {
       //console.log(value);
+      this.canLeave=false;
     });
   }
 
@@ -94,7 +97,8 @@ export class SignUpComponent implements OnInit {
       var signUpVieModel = this.signUpForm.value as SignUpViewModel;
       this.loginService.Register(signUpVieModel).subscribe({
         next: (response) => {
-          this.router.navigate(['tasks']);
+          this.canLeave = true;
+          this.router.navigate(["/employee","tasks"]);
         },
         error: (error) => {
           console.log(error);

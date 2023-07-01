@@ -6,6 +6,7 @@ import { Project } from 'src/app/project';
 import { ProjectsService } from 'src/app/projects.service';
 import * as $ from 'jquery';
 import { ProjectComponent } from '../project/project.component';
+import { FilterPipe } from 'src/app/filter.pipe';
 
 @Component({
   selector: 'app-projects',
@@ -26,6 +27,10 @@ export class ProjectsComponent implements OnInit {
   searchBy: string = 'ProjectName';
   searchText: string = '';
 
+  currentPageIndex: number = 0;
+  pages: any[] = [];
+  pageSize: number = 3;
+
   @ViewChild("newForm") newForm: NgForm | any = null;
   @ViewChild("editForm") editForm: NgForm | any = null;
 
@@ -39,6 +44,7 @@ export class ProjectsComponent implements OnInit {
       next: (response: Project[]) => {
         this.projects = response;
         this.showLoading = false;
+        this.calculateNoOfPages();
       },
       error: (error) => {
         console.log(error);
@@ -54,6 +60,21 @@ export class ProjectsComponent implements OnInit {
         console.log(error);
       },
     });
+  }
+
+  calculateNoOfPages()
+  {
+    let filterPipe = new FilterPipe();
+    var resultProjects = filterPipe.transform(this.projects, this.searchBy, this.searchText);
+    var noOfPages = Math.ceil(resultProjects.length  / this.pageSize);
+
+    this.pages = [];
+    for (let i = 0; i < noOfPages; i++)
+    {
+      this.pages.push( { pageIndex: i });
+    }
+
+    this.currentPageIndex = 0;
   }
 
   isAllChecked: boolean = false;
@@ -106,6 +127,7 @@ export class ProjectsComponent implements OnInit {
           this.newProject.status = null;
           
           $('#newFormCancel').trigger('click');
+          this.calculateNoOfPages();
         },
         error: (error) => {
           console.log(error);
@@ -181,6 +203,7 @@ export class ProjectsComponent implements OnInit {
         this.deleteProject.projectName = null;
         this.deleteProject.dateOfStart = null;
         this.deleteProject.teamSize = null;
+        this.calculateNoOfPages();
       },
       error: (error) => {
         console.log(error);
@@ -189,21 +212,29 @@ export class ProjectsComponent implements OnInit {
   }
 
   onSearchClick() {
-    this.projectService
-      .SearchProjects(this.searchBy, this.searchText)
-      .subscribe({
-        next: (response: Project[]) => {
-          this.projects = response;
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
+    // this.projectService
+    //   .SearchProjects(this.searchBy, this.searchText)
+    //   .subscribe({
+    //     next: (response: Project[]) => {
+    //       this.projects = response;
+    //     },
+    //     error: (error) => {
+    //       console.log(error);
+    //     },
+    //   });
   }
 
-  
+  onSearchTextKeyup(event: any)
+  {
+    this.calculateNoOfPages();
+  }
 
   onHideShowDetails(event:any){
     this.projectService.toggleDetails();
+  }
+
+  onPageIndexClicked(pageIndex: number)
+  {
+    this.currentPageIndex = pageIndex;
   }
 }

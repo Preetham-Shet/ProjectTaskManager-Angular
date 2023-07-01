@@ -27,7 +27,7 @@ namespace MVCProjectTaskManager.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Get()
         {
-            System.Threading.Thread.Sleep(1000);
+            //System.Threading.Thread.Sleep(1000);
             List<Project> projects = db.Projects.Include("ClientLocation").ToList();
 
             List<ProjectViewModel> projectsViewModel = new List<ProjectViewModel>();

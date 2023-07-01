@@ -11,6 +11,10 @@ import { ClientLocationStatusValidatorDirective } from '../client-location-statu
 import { ProjectIDUniqueValidatorDirective } from '../project-idunique-validator.directive';
 import { ProjectComponent } from './project/project.component';
 import { CheckBoxPrinterComponent } from './check-box-printer/check-box-printer.component';
+import { FilterPipe } from '../filter.pipe';
+import { PagingPipe } from '../paging.pipe';
+import { ProjectDetailsComponent } from './project-details/project-details.component';
+import { AdminRoutingModule } from './admin-routing/admin-routing.module';
 
 @NgModule({
   declarations: [
@@ -22,9 +26,12 @@ import { CheckBoxPrinterComponent } from './check-box-printer/check-box-printer.
     ClientLocationStatusValidatorDirective,
     ProjectIDUniqueValidatorDirective,
     ProjectComponent,
-    CheckBoxPrinterComponent
+    CheckBoxPrinterComponent,
+    FilterPipe,
+    PagingPipe,
+    ProjectDetailsComponent
   ],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AdminRoutingModule],
   exports: [
     DashboardComponent,
     AboutComponent,
@@ -33,7 +40,7 @@ import { CheckBoxPrinterComponent } from './check-box-printer/check-box-printer.
     TeamSizeValidatorDirective,
     ClientLocationStatusValidatorDirective,
     ProjectIDUniqueValidatorDirective,
-    ProjectComponent
+    ProjectDetailsComponent
   ],
   providers: [DashboardService],
 })
