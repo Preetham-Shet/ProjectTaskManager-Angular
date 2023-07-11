@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { AboutComponent } from './about/about.component';
-import { MyProfileComponent } from './my-profile/my-profile.component';
-import { DashboardService } from '../dashboard.service';
-import { ProjectsComponent } from './projects/projects.component';
-import { FormsModule } from '@angular/forms';
-import { TeamSizeValidatorDirective } from '../team-size-validator.directive';
-import { ClientLocationStatusValidatorDirective } from '../client-location-status-validator.directive';
-import { ProjectIDUniqueValidatorDirective } from '../project-idunique-validator.directive';
-import { ProjectComponent } from './project/project.component';
-import { CheckBoxPrinterComponent } from './check-box-printer/check-box-printer.component';
-import { FilterPipe } from '../filter.pipe';
-import { PagingPipe } from '../paging.pipe';
-import { ProjectDetailsComponent } from './project-details/project-details.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AboutComponent } from './components/about/about.component';
+import { MyProfileComponent } from './components/my-profile/my-profile.component';
+import { DashboardService } from '../services/dashboard.service';
+import { ProjectsComponent } from './components/projects/projects.component';
+import { ProjectComponent } from './components/project/project.component';
+import { CheckBoxPrinterComponent } from './components/check-box-printer/check-box-printer.component';
+import { ProjectDetailsComponent } from './components/project-details/project-details.component';
 import { AdminRoutingModule } from './admin-routing/admin-routing.module';
+import { SharedModule } from '../shared/shared.module';
+import { CountriesComponent } from './components/countries/countries.component';
+import { ClientLocationsComponent } from './components/client-locations/client-locations.component';
+import { TaskPrioritiesComponent } from './components/task-priorities/task-priorities.component';
+import { TaskStatusComponent } from './components/task-status/task-status.component';
+import { MastersComponent } from './components/masters/masters.component';
 
 @NgModule({
   declarations: [
@@ -22,26 +21,25 @@ import { AdminRoutingModule } from './admin-routing/admin-routing.module';
     AboutComponent,
     MyProfileComponent,
     ProjectsComponent,
-    TeamSizeValidatorDirective,
-    ClientLocationStatusValidatorDirective,
-    ProjectIDUniqueValidatorDirective,
     ProjectComponent,
     CheckBoxPrinterComponent,
-    FilterPipe,
-    PagingPipe,
-    ProjectDetailsComponent
+    ProjectDetailsComponent,
+    CountriesComponent,
+    ClientLocationsComponent,
+    TaskPrioritiesComponent,
+    TaskStatusComponent,
+    MastersComponent
   ],
-  imports: [CommonModule, FormsModule, AdminRoutingModule],
+  imports: [SharedModule, AdminRoutingModule],
   exports: [
     DashboardComponent,
     AboutComponent,
     MyProfileComponent,
     ProjectsComponent,
-    TeamSizeValidatorDirective,
-    ClientLocationStatusValidatorDirective,
-    ProjectIDUniqueValidatorDirective,
     ProjectDetailsComponent
   ],
   providers: [DashboardService],
+  // entryComponents: [CountriesComponent, ClientLocationsComponent, TaskPrioritiesComponent, TaskStatusComponent]
 })
+
 export class AdminModule {}

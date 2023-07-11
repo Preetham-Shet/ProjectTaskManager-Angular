@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from '../dashboard/dashboard.component';
-import { ProjectsComponent } from '../projects/projects.component';
-import { ProjectDetailsComponent } from '../project-details/project-details.component';
+import { DashboardComponent } from '../components/dashboard/dashboard.component';
+import { ProjectsComponent } from '../components/projects/projects.component';
+import { ProjectDetailsComponent } from '../components/project-details/project-details.component';
+import { MastersComponent } from '../components/masters/masters.component';
 
 const routes:Routes = [
   {
@@ -13,6 +14,7 @@ const routes:Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'projects', component: ProjectsComponent },
       { path: 'projects/view/:projectid', component: ProjectDetailsComponent },
+      {path:'masters', component:MastersComponent}
     ],
   },
 

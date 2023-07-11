@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { LoginService } from './login.service';
-import { RouterLoggerService } from './router-logger.service';
+import { LoginService } from './services//login.service';
+import { RouterLoggerService } from './services/router-logger.service';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { fadeAnimation } from './MyAnimation';
 
@@ -14,6 +14,8 @@ export class AppComponent {
   constructor(public loginService:LoginService, private routerLoggerService:RouterLoggerService, private router:Router){}
 
   ngOnIntIt(){
+    this.loginService.detectIfAlreadyLoggedIn();
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         let userName = (this.loginService.currentUserName) ? this.loginService.currentUserName : "anonymous";

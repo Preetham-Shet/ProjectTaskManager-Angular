@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MVCProjectTaskManager.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MVCProjectTaskManager.Identity
 {
@@ -21,7 +18,16 @@ namespace MVCProjectTaskManager.Identity
         public DbSet<ApplicationRole> ApplicationRoles { get; set; }
 
         public DbSet<Country> Countries { get; set; }
+
         public DbSet<Skill> Skills { get; set; }
+
+        public DbSet<TaskPriority> TaskPriorities { get; set; }
+
+        public DbSet<TaskStatus> TaskStatuses { get; set; }
+
+        public DbSet<Task> Tasks { get; set; }
+
+        public DbSet<TaskStatusDetail> TaskStatusDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -236,6 +242,21 @@ namespace MVCProjectTaskManager.Identity
                new Country() { CountryID = 192, CountryName = "Nauru" },
                new Country() { CountryID = 193, CountryName = "Vatican City" }
            );
+
+            modelBuilder.Entity<TaskPriority>().HasData(
+                   new TaskPriority() { TaskPriorityID = 1, TaskPriorityName = "Urgent" },
+                   new TaskPriority() { TaskPriorityID = 2, TaskPriorityName = "Normal" },
+                   new TaskPriority() { TaskPriorityID = 3, TaskPriorityName = "Below Normal" },
+                   new TaskPriority() { TaskPriorityID = 4, TaskPriorityName = "Low" }
+            );
+
+            modelBuilder.Entity<TaskStatus>().HasData(
+               new TaskStatus() { TaskStatusID = 1, TaskStatusName = "Holding" }, //Tasks that need to be documented still
+               new TaskStatus() { TaskStatusID = 2, TaskStatusName = "Prioritized" }, //Tasks that are placed in priority order; so need to start ASAP
+               new TaskStatus() { TaskStatusID = 3, TaskStatusName = "Started" }, //Tasks that are currently working
+               new TaskStatus() { TaskStatusID = 4, TaskStatusName = "Finished" }, //Tasks that are finished workng
+               new TaskStatus() { TaskStatusID = 5, TaskStatusName = "Reverted" } //Tasks that are reverted back, with comments or issues
+            );
         }
     }
 }
